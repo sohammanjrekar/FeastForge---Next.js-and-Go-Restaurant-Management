@@ -1,0 +1,2 @@
+# FeastForge : Next.js and Go Restaurant Management
+ FeastForge is a comprehensive restaurant management system built with Next.js and Go. Seamlessly manage menus, process orders, handle reservations, and more with this powerful, modern solution. From frontend interface to backend operations, FeastForge ensures a delightful experience for both customers and restaurant staff. Let the culinary journey begin with FeastForge! 🍽️💻
