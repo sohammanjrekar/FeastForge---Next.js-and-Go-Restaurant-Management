@@ -3,10 +3,10 @@ package controller
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"restaurant-management/database"
 	"restaurant-management/models"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -22,16 +22,17 @@ var validate = validator.New()
 func GetFoods() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-		result, err := foodcollection.Find(context.TODO(), bson.M{})
-		defer cancel()
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occured while fetching menus"})
+
+		recordPerPage, err := strconv.Atoi(c.Query("recordPerPage"))
+		if err != nil || recordPerPage < 1 {
+			recordPerPage = 10
 		}
-		var allFoods []bson.M
-		if err = result.All(ctx, &allFoods); err != nil {
-			log.Fatal(err)
+		page, err := strconv.Atoi(c.Query("page"))
+		if err != nil || page < 1 {
+			page = 1
 		}
-		c.JSON(http.StatusOK, allFoods)
+		startIndex := (page - 1) * recordPerPage
+		startIndex
 
 	}
 }
